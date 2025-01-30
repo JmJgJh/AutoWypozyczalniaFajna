@@ -1,0 +1,51 @@
+﻿@model AutoWypozyczalniaFajna.Models.Samochod
+
+@{
+    ViewData["Title"] = "Usuń";
+}
+
+<h1>Usuń</h1>
+
+<h3>Czy na pewno chcesz usunąć ten samochód?</h3>
+<div>
+    <h4>Samochód</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Marka)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Marka.MarkaNazwa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypPaliwa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypPaliwa.Paliwo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NrRejestracyjny)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NrRejestracyjny)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CenaZaDzien)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CenaZaDzien)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Usuń" class="btn btn-danger" /> |
+        <a asp-action="Index">Powrót do listy</a>
+    </form>
+</div>

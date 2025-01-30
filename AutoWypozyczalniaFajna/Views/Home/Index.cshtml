@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Strona Startowa";
+}
+
+
+
+@if (User.IsInRole("Administrator"))
+{
+    <h1><a href="/adminpanel">Panel Administracyjny</a></h1>
+}
+else
+{
+    <h1>Witaj w naszej wypożyczalni samochodów</h1>
+
+    <p>Zapraszamy do skorzystania z naszej oferty wynajmu samochodów. Wybierz najlepszy pojazd dla siebie i ciesz się komfortową jazdą!</p>
+    <p>Oferujemy szeroką gamę pojazdów dostępnych do wynajęcia na różne potrzeby. Sprawdź naszą ofertę i rezerwuj online.</p>
+}

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AutoWypozyczalniaFajna.Models.Samochod>
+
+@{
+    ViewData["Title"] = "Indeks";
+}
+
+<h1>Indeks</h1>
+
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+    <a asp-action="Create">Utwórz nowy</a>
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Marka)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypPaliwa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CenaZaDzien)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marka.MarkaNazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypPaliwa.Paliwo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CenaZaDzien)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> 
+                        <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> 
+                        <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,85 @@
+﻿@model AutoWypozyczalniaFajna.Models.Wypozyczenie
+
+@{
+    ViewData["Title"] = "Edytuj";
+}
+
+<h1>Edytuj</h1>
+
+<h4>Wypożyczenie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="SamochodId" class="control-label"></label>
+                <select asp-for="SamochodId" class="form-control" asp-items="ViewBag.SamochodId"></select>
+                <span asp-validation-for="SamochodId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataWypozyczenia" class="control-label"></label>
+                <input asp-for="DataWypozyczenia" class="form-control" />
+                <span asp-validation-for="DataWypozyczenia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataZwrotu" class="control-label"></label>
+                <input asp-for="DataZwrotu" class="form-control" />
+                <span asp-validation-for="DataZwrotu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CenaCalkowita" class="control-label"></label>
+                <input asp-for="CenaCalkowita" class="form-control" readonly />
+                <span asp-validation-for="CenaCalkowita" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="user">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Powrót do listy</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dataWypozyczenia = document.getElementById("DataWypozyczenia");
+            const dataZwrotu = document.getElementById("DataZwrotu");
+            const cenaCalkowita = document.getElementById("CenaCalkowita");
+            const samochodSelect = document.getElementById("SamochodId");
+
+            let cenySamochodow = @Html.Raw(Json.Serialize(ViewBag.CenySamochodow));
+
+            function obliczCene() {
+                const start = new Date(dataWypozyczenia.value);
+                const end = new Date(dataZwrotu.value);
+                const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+                const cenaZaDzien = cenySamochodow[samochodSelect.value] || 0;
+
+                if (diff > 0) {
+                    cenaCalkowita.value = diff * cenaZaDzien;
+                } else {
+                    cenaCalkowita.value = 0;
+                }
+            }
+
+            dataWypozyczenia.addEventListener("change", obliczCene);
+            dataZwrotu.addEventListener("change", obliczCene);
+            samochodSelect.addEventListener("change", obliczCene);
+
+            document.getElementById("user").style.display = "none";
+        });
+    </script>
+}

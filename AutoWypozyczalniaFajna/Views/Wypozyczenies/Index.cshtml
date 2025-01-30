@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AutoWypozyczalniaFajna.Models.Wypozyczenie>
+
+@{
+    ViewData["Title"] = "Lista wypożyczeń";
+}
+
+<h1>Lista wypożyczeń</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Nowe wypożyczenie</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Samochód</th>
+            <th>Data wypożyczenia</th>
+            <th>Data zwrotu</th>
+            <th>Cena całkowita</th>
+            <th>Użytkownik</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Samochod.Model)</td>
+                <td>@item.DataWypozyczenia.ToShortDateString()</td>
+                <td>@item.DataZwrotu.ToShortDateString()</td>
+                <td>@($"{item.CenaCalkowita} PLN")</td>
+                <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
